@@ -106,9 +106,8 @@ const checkOut = async (req, res) => {
     }
 };
 
-// ===============================
 // GET MY ATTENDANCE
-// ===============================
+
 const getMyAttendance = async (req, res) => {
     try {
         const employeeId = req.user.userId;
