@@ -1,10 +1,8 @@
-// server/controllers/hrController.js
-
 const User = require("../models/User");
 const Attendance = require("../models/Attendance");
 const Leave = require("../models/Leave");
 
-// 1. Get all employees
+// Get all employees
 const getAllEmployees = async (req, res) => {
     try {
         const employees = await User.find(
@@ -23,7 +21,7 @@ const getAllEmployees = async (req, res) => {
     }
 };
 
-// 2. Get Dashboard Statistics + Pending Leaves
+// Get Dashboard Statistics + Pending Leaves
 const getDashboardStats = async (req, res) => {
     try {
         const totalEmployees = await User.countDocuments({ role: "EMPLOYEE" });
@@ -71,7 +69,7 @@ const getDashboardStats = async (req, res) => {
     }
 };
 
-// 3. Get all attendance (Filters out deleted employees & auto-fills status for active staff)
+// Get all attendance (Filters out deleted employees & auto-fills status for active staff)
 const getAllAttendance = async (req, res) => {
     try {
         const today = new Date().toISOString().split("T")[0];
@@ -86,7 +84,7 @@ const getAllAttendance = async (req, res) => {
             .sort({ date: -1, createdAt: -1 })
             .lean();
 
-        // 1. FILTER: Only keep records for ACTIVE employees
+        // FILTER: Only keep records for ACTIVE employees
         const validDbAttendance = dbAttendance.filter(
             a => a.employee && activeEmployeeIds.includes(a.employee._id.toString())
         );
@@ -143,7 +141,7 @@ const getAllAttendance = async (req, res) => {
     }
 };
 
-// 4. Delete Employee (Cascade Delete)
+// Delete Employee (Cascade Delete)
 const deleteEmployee = async (req, res) => {
     try {
         const { id } = req.params;
