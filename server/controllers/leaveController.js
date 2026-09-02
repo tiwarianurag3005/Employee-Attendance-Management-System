@@ -12,21 +12,21 @@ const applyLeave = async (req, res) => {
             reason
         } = req.body;
 
-        // 1. Check required fields
+        // Check required fields
         if (!leaveType || !startDate || !endDate || !reason) {
             return res.status(400).json({
                 message: "All leave fields are required"
             });
         }
 
-        // 2. Validate leave type
+        // Validate leave type
         if (!["CASUAL", "SICK", "PAID"].includes(leaveType)) {
             return res.status(400).json({
                 message: "Invalid leave type"
             });
         }
 
-        // 3. Convert dates
+        // Convert dates
         const start = new Date(startDate);
         const end = new Date(endDate);
 
@@ -36,7 +36,7 @@ const applyLeave = async (req, res) => {
             });
         }
 
-        // 4. Validate past date (Cannot apply for past dates)
+        // Validate past date (Cannot apply for past dates)
         const todayStr = new Date().toISOString().split("T")[0];
         const todayDate = new Date(todayStr);
 
@@ -46,14 +46,14 @@ const applyLeave = async (req, res) => {
             });
         }
 
-        // 5. Validate date order
+        // Validate date order
         if (start > end) {
             return res.status(400).json({
                 message: "Start date cannot be after end date"
             });
         }
 
-        // 6. Check Overlapping Leaves (Prevents duplicate requests for the same date range)
+        // Check Overlapping Leaves (Prevents duplicate requests for the same date range)
         const overlappingLeave = await Leave.findOne({
             employee: employeeId,
             status: { $in: ["PENDING", "APPROVED"] },
@@ -68,11 +68,11 @@ const applyLeave = async (req, res) => {
             });
         }
 
-        // 7. Calculate number of days
+        // Calculate number of days
         const difference = end.getTime() - start.getTime();
         const numberOfDays = Math.floor(difference / (1000 * 60 * 60 * 24)) + 1;
 
-        // 8. Find employee & Check leave balance
+        // Find employee & Check leave balance
         const employee = await User.findById(employeeId);
         if (!employee) {
             return res.status(404).json({
@@ -89,7 +89,7 @@ const applyLeave = async (req, res) => {
             });
         }
 
-        // 9. Create leave request
+        // Create leave request
         const leave = await Leave.create({
             employee: employeeId,
             leaveType,
