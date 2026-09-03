@@ -7,11 +7,11 @@ This is a Full Stack, Enterprise-Grade Web Application for Attendance Management
 
   Attendance Check-In / Check-Out: Single-click clock-in and clock-out with server-side validation to prevent duplicate entries on the same calendar day.
 
-  Working Hours Calculation: Dynamic computation of daily working hours derived from check-in and check-out timestamps to determine shift status (such as Full-Day or Half-Day thresholds).
+  Working Hours Calculation: Dynamic computation of daily working hours derived from check-in and check-out timestamps to determine shift status.
 
   Leave Deduction Calculation: Automated leave workflow where submitted requests are evaluated against remaining quotas and automatically deducted from the employee's balance upon HR approval.
 
-  Attendance Status Tracking: Real-time visual status badges (Present, Absent, Half-day, On Leave) paired with historical logs for comprehensive auditing.
+  Attendance Status Tracking: Real-time visual status badges (Present, Absent, On Leave) paired with historical logs for comprehensive auditing.
 
 Dedicated Dashboards:
 
